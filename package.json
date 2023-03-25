@@ -16,6 +16,9 @@
   },
   "homepage": "https://github.com/hboppe/calculator#readme",
   "devDependencies": {
+    "@savvywombat/tailwindcss-grid-areas": "^3.0.1",
     "tailwindcss": "^3.2.7"
+  },
+  "dependencies": {
   }
 }
