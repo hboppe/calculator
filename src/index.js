@@ -7,6 +7,9 @@ class Calculator {
   #isCalculating
   #equalButton
   #previousValue
+  #currentValue
+  #plusMinus
+  #percentage
 
   constructor(){
     this.#screen = document.getElementsByClassName('result')[0];
@@ -14,7 +17,11 @@ class Calculator {
     this.#operations = [...document.getElementsByClassName('operation')];
     this.#cleanScreen = document.querySelector('.cleanScreen');
     this.#equalButton = document.querySelector('.equalButton');
+    this.#plusMinus = document.querySelector('.plus-minus');
+    this.#percentage = document.querySelector('.percentage');
+
     this.#previousValue = null;
+    this.#currentValue = null;
 
     this.#selectedOperation = null;
     this.#isCalculating = false;
@@ -23,6 +30,14 @@ class Calculator {
     this.#cleanCalculator();
     this.#addEventListenerToOperations();
     this.#showResult()
+    this.#toggleSignOfNumber()
+    this.calculatePercentage()
+  }
+
+  #toggleSignOfNumber() {
+    this.#plusMinus.addEventListener('click', () => {
+      this.#screen.innerHTML = -(Number(this.#screen.innerHTML))
+    })
   }
 
   #addEventListenersToNumbers() {
@@ -76,10 +91,24 @@ class Calculator {
     return a / b;
   }
 
+  calculatePercentage(){
+    this.#percentage.addEventListener('click', () => {
+      const percentageAmount = Number(this.#screen.innerHTML) / 100;
+      const totalAmount = Number(this.#previousValue) 
+      this.#screen.innerHTML = totalAmount * percentageAmount
+      this.#currentValue = this.#screen.innerHTML;
+    })
+  }
+
   #showResult() {
     this.#equalButton.addEventListener('click', () => {
-      const number1 = Number(this.#screen.innerHTML);
-      const number2 = Number(this.#previousValue);
+
+      if(!this.#currentValue){
+        this.#currentValue = this.#screen.innerHTML;
+      }
+
+      const number1 = Number(this.#previousValue);
+      const number2 = Number(this.#currentValue);
 
       switch(this.#selectedOperation){
         case '+':
@@ -94,6 +123,8 @@ class Calculator {
         case '/':
           this.#screen.innerHTML = this.divideNumbers(number1, number2);
       }
+
+      this.#previousValue = this.#screen.innerHTML;
     })
   }
 }
