@@ -4,9 +4,6 @@ class Calculator {
     this.screen = document.querySelector('.result');
     this.numbers = [...document.getElementsByClassName('number')];
     this.operations = [...document.getElementsByClassName('operation')];
-    this.cleanScreen = document.querySelector('.cleanScreen');
-    this.plusMinus = document.querySelector('.plus-minus');
-    this.percentage = document.querySelector('.percentage');
 
     this.previousValue = null;
     this.currentValue = null;
@@ -22,7 +19,9 @@ class Calculator {
   }
 
   toggleSignOfNumber() {
-    this.plusMinus.addEventListener('click', () => {
+    const plusMinus = document.querySelector('.plus-minus');
+
+    plusMinus.addEventListener('click', () => {
       this.screen.innerHTML = -(Number(this.screen.innerHTML))
     })
   }
@@ -36,12 +35,13 @@ class Calculator {
   }
 
   cleanCalculator(){
-    this.cleanScreen.addEventListener('click', () => this.screen.innerHTML = 0);
+    const cleanScreen = document.querySelector('.cleanScreen');
+
+    cleanScreen.addEventListener('click', () => this.screen.innerHTML = 0);
     this.selectedOperation = null;
     this.currentValue = null;
     this.previousValue = null;
     this.isCalculating = false;
-
   }
 
   addNumberToScreen(number){
@@ -68,17 +68,15 @@ class Calculator {
         if(this.selectedOperation && this.previousValue){
           
           this.currentValue = this.screen.innerHTML 
-          const result = this.calculate(this.previousValue, this.screen.innerHTML, currentOperation);
+          const result = this.calculate(this.previousValue, this.screen.innerHTML, this.selectedOperation);
           this.previousValue = null;
-          this.screen.innerHTML = result
-          this.selectedOperation = currentOperation
-
+          this.screen.innerHTML = result;
           
-        } else if(!this.selectedOperation && !this.previousValue){
-          this.selectedOperation = currentOperation
         } else if(this.selectedOperation && !this.previousValue){
           this.currentValue = this.screen.innerHTML;
         }
+
+        this.selectedOperation = currentOperation
         
       })
     })
@@ -95,10 +93,11 @@ class Calculator {
         this.previousValue = this.screen.innerHTML;
       }
 
-      const result = this.calculate(this.previousValue || this.screen.innerHTML, this.currentValue, this.selectedOperation)
+      const result = this.calculate(this.previousValue, this.currentValue, this.selectedOperation)
 
       this.previousValue = null;
       this.showResult(result)
+
     })
 
   }
@@ -106,41 +105,34 @@ class Calculator {
   sumNumbers(a, b){
     const result = Number(a) + Number(b);
 
-    return isNaN(result) ? 'Not a number' : result;
+    return isFinite(result) ? result : 'Not a number';
   }
 
   subtractNumbers(a, b){
     const result = Number(a) - Number(b)
 
-    return isNaN(result) ? 'Not a number' : result;
+    return isFinite(result) ? result : 'Not a number';
   }
   
   multiplyNumbers(a, b){
-    // if(typeof b === 'object'){
-    //   return Number(a);
-    // }
-
     const result = Number(a) * Number(b);
 
-    return isNaN(result) ? 'Not a number' : result;
+    return isFinite(result) ? result : 'Not a number';
   }
 
   divideNumbers(a, b){
-    // if(typeof b === 'object'){
-    //   return Number(a);
-    // } 
-
     const result = Number(a) / Number(b);
-    return isNaN(result) ? 'Not a number' : result;
+    
+    return isFinite(result) ? result : 'Not a number';
   }
 
   calculatePercentage(){
-    this.percentage.addEventListener('click', () => {
+    const percentage = document.querySelector('.percentage');
+
+    percentage.addEventListener('click', () => {
       const percentageAmount = Number(this.screen.innerHTML) / 100;
-      const totalAmount = Number(this.previousValue) 
-      const result = this.multiplyNumbers(totalAmount, percentageAmount);
-      this.screen.innerHTML = isNaN(result) ? 'Not a number' : result
-      this.currentValue = this.screen.innerHTML;
+      const totalAmount = Number(this.previousValue) * percentageAmount;
+      this.screen.innerHTML = isFinite(totalAmount) ? totalAmount : 'Not a number'
     })
   }
 
