@@ -40,41 +40,21 @@ class Calculator {
     this.selectedOperation = null;
     this.currentValue = null;
     this.previousValue = null;
-  }
+    this.isCalculating = false;
 
-  // setCurrentValue(){
-  //   if(this.previousValue) {
-  //     this.currentValue = this.screen.innerHTML;
-  //   }
-  // }
+  }
 
   addNumberToScreen(number){
     if(this.screen.innerHTML === "0" || this.isCalculating){
       if(this.isCalculating && !this.previousValue){
         this.previousValue = this.screen.innerHTML;
       } 
-      
-      // else if(this.isCalculating && this.previousValue){
-      //   this.currentValue = this.screen.innerHTML;
-      // }
 
       this.screen.innerHTML = number;
       this.isCalculating = false;
-
-      // this.setCurrentValue()
-
-      // seta currentValue
-
-      // if(this.previousValue) {
-      //   this.currentValue = this.screen.innerHTML;
-      // }
       
     } else {
       this.screen.innerHTML += number;
-      // seta currentValue
-      // if(this.previousValue) {
-      //   this.currentValue = this.screen.innerHTML;
-      // }
     }
   
   }
@@ -87,7 +67,7 @@ class Calculator {
 
         if(this.selectedOperation && this.previousValue){
           
-          this.currentValue = this.screen.innerHTML // teste aqui
+          this.currentValue = this.screen.innerHTML 
           const result = this.calculate(this.previousValue, this.screen.innerHTML, currentOperation);
           this.previousValue = null;
           this.screen.innerHTML = result
@@ -99,43 +79,10 @@ class Calculator {
         } else if(this.selectedOperation && !this.previousValue){
           this.currentValue = this.screen.innerHTML;
         }
-
-        // this.previousValue = this.screen.innerHTML;
         
       })
     })
   }
-
-  // addEventListenerToOperations(){
-  //   this.operations.forEach(operationButton => {
-  //     operationButton.addEventListener('click', (e) => {
-  //       this.isCalculating = true;
-
-  //       const currentOperation = e.target.innerHTML
-
-  //       if(currentOperation !== '='){
-  //         if(!this.selectedOperation){
-  //           this.previousValue = this.screen.innerHTML;
-  //         } else {
-  //           const result = this.calculate();
-  //           this.showResult(result);
-  //           this.previousValue = result;
-  //         }
-  
-  //         this.selectedOperation = currentOperation;
-  //         this.currentValue = null; // coloca o current value como null para evitar cliques e calculos
-  //       } 
-
-  //       const result = this.calculate()
-  //       this.previousValue = result;
-  //       this.showResult(result)
-  //       console.log(this.previousValue, this.currentValue)
-
-
-        
-  //     })
-  //   })
-  // }
 
   addEventListenerToEqualButton(){
     const equalButton = document.querySelector('.equalButton');
@@ -148,46 +95,51 @@ class Calculator {
         this.previousValue = this.screen.innerHTML;
       }
 
-      console.log(`previous:`, this.previousValue, `current:`,this.currentValue, `screen:`,this.screen.innerHTML, this.selectedOperation)
-
       const result = this.calculate(this.previousValue || this.screen.innerHTML, this.currentValue, this.selectedOperation)
 
       this.previousValue = null;
-      console.log(result)
       this.showResult(result)
     })
 
   }
 
   sumNumbers(a, b){
-    return Number(a) + Number(b);
+    const result = Number(a) + Number(b);
+
+    return isNaN(result) ? 'Not a number' : result;
   }
 
   subtractNumbers(a, b){
-    return Number(a) - Number(b);
+    const result = Number(a) - Number(b)
+
+    return isNaN(result) ? 'Not a number' : result;
   }
   
   multiplyNumbers(a, b){
-    if(typeof b === 'object'){
-      return Number(a);
-    }
+    // if(typeof b === 'object'){
+    //   return Number(a);
+    // }
 
-    return Number(a) * Number(b);
+    const result = Number(a) * Number(b);
+
+    return isNaN(result) ? 'Not a number' : result;
   }
 
   divideNumbers(a, b){
-    if(typeof b === 'object'){
-      return Number(a);
-    }
+    // if(typeof b === 'object'){
+    //   return Number(a);
+    // } 
 
-    return Number(a) / Number(b);
+    const result = Number(a) / Number(b);
+    return isNaN(result) ? 'Not a number' : result;
   }
 
   calculatePercentage(){
     this.percentage.addEventListener('click', () => {
       const percentageAmount = Number(this.screen.innerHTML) / 100;
       const totalAmount = Number(this.previousValue) 
-      this.screen.innerHTML = this.multiplyNumbers(totalAmount, percentageAmount);
+      const result = this.multiplyNumbers(totalAmount, percentageAmount);
+      this.screen.innerHTML = isNaN(result) ? 'Not a number' : result
       this.currentValue = this.screen.innerHTML;
     })
   }
