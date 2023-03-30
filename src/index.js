@@ -82,8 +82,6 @@ class Calculator {
       if(!this.screen.innerHTML.includes('.') && this.screen.innerHTML !== '0'){
         this.screen.innerHTML += '.'
       }
-
-      console.log()
     })
   }
 
