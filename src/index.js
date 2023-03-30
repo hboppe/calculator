@@ -13,9 +13,11 @@ class Calculator {
     this.addEventListenersToNumbers();
     this.cleanCalculator();
     this.addEventListenerToOperations();
-    this.toggleSignOfNumber()
-    this.calculatePercentage()
-    this.addEventListenerToEqualButton()
+    this.toggleSignOfNumber();
+    this.calculatePercentage();
+    this.addEventListenerToEqualButton();
+    this.addEventListenerToDotButton();
+    this.screenFlicker();
   }
 
   toggleSignOfNumber() {
@@ -23,6 +25,19 @@ class Calculator {
 
     plusMinus.addEventListener('click', () => {
       this.screen.innerHTML = -(Number(this.screen.innerHTML))
+    })
+  }
+
+  screenFlicker(){
+    const screenFlickersButtons = document.querySelectorAll('.screen-flicker');
+    screenFlickersButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        this.screen.classList.add('animate-flicker');
+  
+        setTimeout(() => {
+          this.screen.classList.remove('animate-flicker');
+        }, 200)
+      })
     })
   }
 
@@ -37,11 +52,13 @@ class Calculator {
   cleanCalculator(){
     const cleanScreen = document.querySelector('.cleanScreen');
 
-    cleanScreen.addEventListener('click', () => this.screen.innerHTML = 0);
-    this.selectedOperation = null;
-    this.currentValue = null;
-    this.previousValue = null;
-    this.isCalculating = false;
+    cleanScreen.addEventListener('click', () => {
+      this.screen.innerHTML = 0
+      this.selectedOperation = null;
+      this.currentValue = null;
+      this.previousValue = null;
+      this.isCalculating = false;
+    });
   }
 
   addNumberToScreen(number){
@@ -57,6 +74,17 @@ class Calculator {
       this.screen.innerHTML += number;
     }
   
+  }
+
+  addEventListenerToDotButton(){
+    const dot = document.querySelector('.dot');
+    dot.addEventListener('click', () => {
+      if(!this.screen.innerHTML.includes('.') && this.screen.innerHTML !== '0'){
+        this.screen.innerHTML += '.'
+      }
+
+      console.log()
+    })
   }
 
   addEventListenerToOperations(){
@@ -87,14 +115,15 @@ class Calculator {
 
     equalButton.addEventListener('click', () => {
 
-      if(this.previousValue){
+      if(!this.selectedOperation){
+        return
+      } else if(this.previousValue){
         this.currentValue = this.screen.innerHTML
       }else {
         this.previousValue = this.screen.innerHTML;
       }
 
-      const result = this.calculate(this.previousValue, this.currentValue, this.selectedOperation)
-
+      const result = this.calculate(this.previousValue, this.currentValue, this.selectedOperation);
       this.previousValue = null;
       this.showResult(result)
 
@@ -148,7 +177,7 @@ class Calculator {
       case '/':
         return this.divideNumbers(number1, number2);
       default:
-        return 'Invalid operation'
+        return 0
     }
   }
 
