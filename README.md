@@ -12,4 +12,4 @@ In addition to the current features, I am planning to add the following enhancem
 
 * Order of Operations Recognition: The calculator will recognize and adhere to the order of operations (PEMDAS/BODMAS) rules, ensuring accurate calculations in complex arithmetic expressions.
 
-To access the calculator, go to: https://hboppe.github.io/calculator/
+To access the calculator, go to: https://hboppe.github.io/calculator/src/index.html
