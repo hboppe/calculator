@@ -62,7 +62,7 @@ class Calculator {
   }
 
   addNumberToScreen(number){
-    if(this.screen.innerHTML === "0" || this.isCalculating){
+    if(this.screen.innerHTML === "0" || this.isCalculating || this.screen.innerHTML === 'Not a number'){
       if(this.isCalculating && !this.previousValue){
         this.previousValue = this.screen.innerHTML;
       } 

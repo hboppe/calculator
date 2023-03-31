@@ -588,6 +588,20 @@ video {
   max-width: 20rem;
 }
 
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-flicker {
+  animation: flicker .1s ease-in-out;
+}
+
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
