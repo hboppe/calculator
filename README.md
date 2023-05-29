@@ -1,6 +1,6 @@
 # MacBook-Inspired Calculator with JavaScript and Tailwind CSS
 
-This project is a calculator web application inspired by the MacBook calculator, built using JavaScript for functionality and Tailwind CSS for styling.The primary goal of the project was to practice Object-Oriented Programming (OOP) concepts that I recently learned in a course. The calculator's functionality and structure were designed using OOP principles.
+This project is a calculator web application inspired by the MacBook calculator, built using JavaScript for functionality and Tailwind CSS for styling.The primary goal of the project was to practice Object-Oriented Programming (OOP). The calculator's functionality and structure were designed using OOP principles.
 
 The calculator mimics the behavior of the MacBook calculator, including the screen flickering effect when the user clicks on an operation button.
 
